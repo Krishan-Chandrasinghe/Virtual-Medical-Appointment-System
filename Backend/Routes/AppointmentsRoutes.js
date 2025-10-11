@@ -3,6 +3,7 @@ import {
     deleteAppointment,
     getAllAppointments,
     getAppointment,
+    getDate,
     makeAppointment,
     updateAppointment
 } from '../Controllers/AppointmentsController.js';
@@ -12,6 +13,8 @@ const router = express.Router();
 router.post('/', makeAppointment);
 
 router.get('/', getAllAppointments);
+
+router.get('/getDate', getDate);
 
 router.get('/:_id', getAppointment);
 

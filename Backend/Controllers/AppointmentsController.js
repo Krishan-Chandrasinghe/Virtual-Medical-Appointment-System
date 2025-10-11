@@ -96,3 +96,7 @@ export const deleteAppointment = async (req, res) => {
         res.status(500).json({ error: error.message, message: 'Appointment deleting failed!' });
     }
 }
+
+export const getDate = async (req, res) => {
+    return res.status(200).json({date: new Date().toLocaleDateString('en-CA')});
+}

@@ -17,7 +17,7 @@ app.use(cookieParser());
 
 // app.use(cors()); // httpOnly cookie will not create like this
 app.use(cors({
-    origin: '*', // Replace with your frontend URL
+    origin: 'http://localhost:5173', // Replace with your frontend URL
     credentials: true
 }));
 

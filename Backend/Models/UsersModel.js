@@ -9,6 +9,7 @@ const usersSchema = new mongoose.Schema({
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     regNumber: { type: String, required: true, unique: true },
+    role: { type: String, enum: ['user', 'admin'], default: 'user' },
     gender: { type: String, required: true, enum: ['male', 'female'] },
     dob: { type: Date, required: true },
     height: { type: Number, required: true },
@@ -23,7 +24,7 @@ const usersSchema = new mongoose.Schema({
 
 usersSchema.statics.Signup = async function (userData) {
     const {
-        email, password, firstName, lastName, regNumber,
+        email, password, firstName, lastName, regNumber, role = 'user',
         gender, dob, height, weight, address, phone, drugAllergies
     } = userData;
 
@@ -43,6 +44,11 @@ usersSchema.statics.Signup = async function (userData) {
 
     // Password strength validation
     if (!validator.isStrongPassword(password)) throw Error('Weak password! Password must be at least 8 characters long and include uppercase, lowercase, number, and symbol.');
+
+    // Role validation
+    if (role && !['user', 'admin'].includes(role)) {
+        throw Error('Role must be either "user" or "admin"');
+    }
 
     // Gender validation
     const normalizedGender = gender.toLowerCase().trim();
@@ -72,7 +78,7 @@ usersSchema.statics.Signup = async function (userData) {
         } else if (typeof drugAllergies === 'string') {
             allergiesArray = drugAllergies.split(',').map(item => item.trim()).filter(item => item);
         }
-        console.log("this: ",allergiesArray)
+        console.log("this: ", allergiesArray)
     }
 
     // Check for existing user
@@ -95,6 +101,7 @@ usersSchema.statics.Signup = async function (userData) {
         firstName: firstName.trim(),
         lastName: lastName.trim(),
         regNumber: regNumber.trim().toUpperCase(),
+        role: role.trim(),
         gender: normalizedGender,
         dob: birthDate,
         height: Number(height),

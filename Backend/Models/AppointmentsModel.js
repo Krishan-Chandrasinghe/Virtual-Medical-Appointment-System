@@ -7,7 +7,16 @@ const usersSchema = new mongoose.Schema({
     name: { type: String, required: true },
     regNumber: { type: String, required: true, unique: true },
     appointNo: { type: String, required: true },
-    appointDate: { type: Date, required: true }
+    appointDate: { type: Date, required: true },
+    expireAt: {
+    type: Date,
+    default: function() {
+      const expire = new Date(this.appointDate);
+      expire.setDate(expire.getDate() + 1);
+      expire.setHours(23, 59, 59, 999);
+      return expire;
+    }
+  }
 }, { timestamps: true });
 
 
@@ -47,6 +56,26 @@ usersSchema.statics.MakeAppointment = async function (appointData) {
 
     return appointment;
 };
+
+usersSchema.statics.GenerateNextAppointmentData = async function () {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    const todaysCount = await this.countDocuments({
+        appointDate: {
+            $gte: today,
+            $lt: tomorrow
+        }
+    });
+
+    return {
+        appointNo: todaysCount + 1,
+        appointDate: new Date()
+    };
+}
 
 
 export default mongoose.model('Appointments', usersSchema);

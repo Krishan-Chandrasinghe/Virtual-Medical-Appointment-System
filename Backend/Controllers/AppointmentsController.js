@@ -97,6 +97,8 @@ export const deleteAppointment = async (req, res) => {
     }
 }
 
-export const getDate = async (req, res) => {
-    return res.status(200).json({date: new Date().toLocaleDateString('en-CA')});
+export const getNextAppointmentData = async (req, res) => {
+    const { appointNo, appointDate } = await AppointmentsModel.GenerateNextAppointmentData();
+
+    res.status(200).json({ appointNo, appointDate, message: 'Next appointment data is fetched successfully.' });    
 }

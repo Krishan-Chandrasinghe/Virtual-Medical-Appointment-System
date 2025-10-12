@@ -3,6 +3,7 @@ import { useAuthContext } from '../hooks/useAuthContext';
 import Login from '../views/Login';
 import LandingPage from '../views/LandingPage';
 import Dashboard from '../views/Dashboard';
+import AppointmentBook from '../views/AppointmentBook';
 
 function RouteHandler({ type = 'public', component: Component }) {
   const { user } = useAuthContext();
@@ -25,7 +26,7 @@ const router = createBrowserRouter([
   // },
   {
     path: '/',
-    element: <LandingPage />
+    element: <UserSignUp />
   },
   {
     path: '/login',
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
   {
     path: '/dashboard',
     element: <RouteHandler type="protected" component={Dashboard} />
+  },
+  {
+    path: '/appointment',
+    element: <RouteHandler type="protected" component={AppointmentBook} />
   }
 ]);
 

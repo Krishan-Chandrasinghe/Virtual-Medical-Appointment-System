@@ -1,9 +1,6 @@
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import Users from '../Models/UsersModel.js';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 const attachResponseCookie = (_id, res) => {
     const token = jwt.sign({ _id }, process.env.JWT_SECRET_STRING, { expiresIn: '3h' });

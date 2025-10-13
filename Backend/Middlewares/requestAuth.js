@@ -1,8 +1,5 @@
 import jwt from 'jsonwebtoken';
 import User from '../Models/UsersModel.js';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 async function requestAuth(req, res, next) {
     const token = req.cookies.authToken;

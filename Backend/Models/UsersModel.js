@@ -1,9 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import validator from 'validator';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 const usersSchema = new mongoose.Schema({
     firstName: { type: String, required: true },

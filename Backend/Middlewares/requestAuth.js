@@ -21,7 +21,6 @@ async function requestAuth(req, res, next) {
         console.log(error);
         res.status(401).json({ error: 'Access unauthorized!' });
     }
-
 }
 
 export default requestAuth;

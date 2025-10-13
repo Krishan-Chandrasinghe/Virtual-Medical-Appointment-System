@@ -11,9 +11,9 @@ const attachResponseCookie = (_id, res) => {
     res.cookie('authToken', token, {
         path: '/', // if path is "/api" that cookie works for only "/api" path requests. not for others
         httpOnly: true,
-        secure: false, // when https - true, http - false
-        sameSite: 'none', // strict/lax => strict - use in different domain/subdomain. lax - allows other sites get request nor for other type requests(eg: link sharing on social media)
-        maxAge: 15 * 60 * 1000 // 15 min
+        secure: process.env.COOKIE_SECURE, // when https - true, http - false
+        sameSite: process.env.COOKIE_SAMESITE, // strict/lax => strict - use in different domain/subdomain. lax - allows other sites get request nor for other type requests(eg: link sharing on social media)
+        maxAge: process.env.COOKIE_MAX_AGE
     })
 }
 
@@ -70,7 +70,7 @@ const loginUser = async (req, res) => {
         res.status(200).json({ user: responseUser, message: 'Logged in successfully!' });
 
     } catch (error) {
-            res.status(401).json({ error: error.message, message: 'Log in unsuccessful!' });
+        res.status(401).json({ error: error.message, message: 'Log in unsuccessful!' });
     }
 }
 
@@ -78,8 +78,8 @@ const logoutUser = (req, res) => {
     res.clearCookie('authToken', {
         path: '/',
         httpOnly: true,
-        secure: false,
-        sameSite: 'none'
+        secure: process.env.COOKIE_SECURE, // when https - true, http - false
+        sameSite: process.env.COOKIE_SAMESITE, // strict/lax => strict - use in different domain/subdomain. lax - allows other sites get request nor for other type requests(eg: link sharing on social media)
     })
     res.status(200).json({ message: 'Logged out successfully!' });
 }

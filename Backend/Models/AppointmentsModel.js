@@ -19,6 +19,7 @@ const usersSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
+usersSchema.index({ "expireAt": 1 }, { expireAfterSeconds: 0 });
 
 usersSchema.statics.MakeAppointment = async function (appointData) {
     const {

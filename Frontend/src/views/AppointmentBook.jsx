@@ -42,7 +42,7 @@ function AppointmentBook() {
             }, 2000);
 
         } catch (error) {
-            setMessage("Couldn't make an appointment.");
+            setMessage(error?.response?.data?.error || 'Couldn\'t make an appointment!');
             setTimeout(() => {
                 navigate("/dashboard");
             }, 2000);

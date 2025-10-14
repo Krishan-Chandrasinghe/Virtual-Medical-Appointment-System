@@ -100,5 +100,22 @@ export const deleteAppointment = async (req, res) => {
 export const getNextAppointmentData = async (req, res) => {
     const { appointNo, appointDate } = await AppointmentsModel.GenerateNextAppointmentData();
 
-    res.status(200).json({ appointNo, appointDate, message: 'Next appointment data is fetched successfully.' });    
+    res.status(200).json({ appointNo, appointDate, message: 'Next appointment data is fetched successfully.' });
+}
+
+export const getTotalAppointments = async (req, res) => {
+        const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    
+    const totalAppointments = await AppointmentsModel.countDocuments({
+        appointDate: {
+            $gte: today,
+            $lt: tomorrow
+        }
+    });
+
+    res.status(200).json({ totalAppointments, message: 'Next appointment data is fetched successfully.' });
 }

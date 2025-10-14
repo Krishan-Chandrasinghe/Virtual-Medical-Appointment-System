@@ -1,9 +1,24 @@
 import React from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import api from '../api/apiConfig'
 import NavBar from '../components/NavBar'
 import Footer from '../components/Footer'
 
 function Dashboard() {
+    const [todayCount, setTodayCount] = useState(0);
+    useEffect(() => {
+        async function totalAppointments() {
+            try {
+                const resp = await api.get('/appointments/getTotalAppointments');
+                console.log('this is today count: ', resp.data.totalAppointments)
+                setTodayCount(resp.data.totalAppointments);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        totalAppointments();
+    }, []);
     return (
         <>
             <NavBar />
@@ -28,7 +43,7 @@ function Dashboard() {
                     <div className='flex flex-col items-start justify-center h-40 w-72 px-10 py-12 shadow-md bg-white rounded-lg'>
                         <h3>Your Appointment No: </h3>
                         <h3>Current Appointment No: </h3>
-                        <h3>Total Appointments: </h3>
+                        <h3>Total Appointments: {todayCount}</h3>
                     </div>
                 </div>
             </div>

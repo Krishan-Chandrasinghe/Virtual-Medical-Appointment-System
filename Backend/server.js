@@ -3,10 +3,16 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
-import UsersRoutes from './Routes/UsersRoutes.js';
-import AppointmentsRoutes from './Routes/AppointmentsRoutes.js';
+import http from 'http';
 
 dotenv.config();
+
+import UsersRoutes from './Routes/UsersRoutes.js';
+import AppointmentsRoutes from './Routes/AppointmentsRoutes.js';
+import AdminRoutes  from './Routes/AdminRoutes.js'
+import initializeSocketIO from './util/socketHandler.js';
+import attachIo from './Middlewares/attachIo.js';
+import requestAuth from './Middlewares/requestAuth.js';
 
 //express app
 const app = express();
@@ -24,11 +30,15 @@ app.use(cors({
 app.use((req, res, next) => {
     console.log(req.method, req.path);
     next();
-})
+});
 
-// connect to routes
+const httpServer = http.createServer(app);
+const io = initializeSocketIO(httpServer);
+
+// connect to routes with middlewares
 app.use('/users', UsersRoutes);
 app.use('/appointments', AppointmentsRoutes);
+app.use('/admin', attachIo(io), AdminRoutes);
 
 // Default route
 app.get('/', (req, res) => {
@@ -40,7 +50,7 @@ mongoose.connect(process.env.MONGO_URI)
     .then(() => {
 
         // Listen to the server
-        app.listen(process.env.SERVER_PORT, process.env.SERVER_HOST, () => {
+        httpServer.listen(process.env.SERVER_PORT, process.env.SERVER_HOST, () => {
             console.log(`Database connected.\nServer is running on http://${process.env.SERVER_HOST}:${process.env.SERVER_PORT}.`);
         })
 

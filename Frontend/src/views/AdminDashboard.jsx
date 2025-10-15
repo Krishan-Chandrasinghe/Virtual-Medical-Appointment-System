@@ -62,21 +62,16 @@ function AdminDashboard() {
         <>
             <NavBar />
             {/* Hero Section */}
-            <div className="flex items-center justify-center bg-gray-100 py-10">
-                <div className='flex flex-col items-center gap-4'>
-                    <h1 className="text-4xl font-bold text-[#3a1031] mt-2">Online Appointment System</h1>
-                    <h3 className="text-xl font-bold text-[#3a1031] mt-2">Make an Appointment</h3>
-                    <Link to='/appointment' className="bg-[#3a1031] cursor-pointer text-center hover:bg-[#6b1d5c] text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">
-                        Book an Appointment
-                    </Link>
-                </div>
+            <div className="flex items-center justify-center bg-gray-100 ">
+                <h1 className="text-2xl sm:text-4xl text-center font-bold text-[#3a1031] mt-5">Online Appointment System</h1>
             </div>
 
             {/* Status Section */}
-            <div className="flex items-center justify-center bg-gray-100 py-10">
-                <div className='flex items-center justify-around gap-4'>
-                    <form className="space-y-4" onSubmit={handleSubmit}>
-                        <div className='px-4 py-6 bg-[#fff5fd] rounded-lg border border-[#d6c1d2] flex flex-col gap-2'>
+            <div className="flex flex-col lg:flex-row items-center justify-center bg-gray-100 py-10 px-4 lg:px-0">
+                <div className='flex flex-col lg:flex-row items-center lg:items-start justify-around gap-8 w-full max-w-7xl'>
+
+                    <form className="space-y-4 w-full max-w-sm" onSubmit={handleSubmit}>
+                        <div className='px-4 py-6 bg-[#fff5fd] rounded-lg border border-[#d6c1d2] flex flex-col gap-2 shadow-lg'>
                             <div className={`border-b-2 mb-2 ${centreStatus.isCentreOpen ? 'border-green-500' : 'border-red-500'} `}>
                                 <h3 className={`font-bold text-lg text-center ${centreStatus.isCentreOpen ? 'text-green-500' : 'text-red-500'}`}>{centreStatus.isCentreOpen ? 'Open' : 'Closed'}</h3>
                             </div>
@@ -134,31 +129,30 @@ function AdminDashboard() {
                         </div>
                     </form>
 
-                    <div className='flex flex-col items-start justify-start h-96 w-3/4 px-10 py-12 shadow-md bg-white rounded-lg'>
+                    {/* All Appointments Table Section */}
+                    <div className='flex flex-col items-start justify-start w-full lg:w-3/4 h-auto max-h-96 px-4 py-6 lg:px-10 lg:py-12 shadow-md bg-white rounded-lg overflow-y-auto'>
                         <h2 className='text-2xl font-bold mb-4'>All Appointments</h2>
-                        <div className="overflow-x-auto">
+                        <div className="overflow-x-auto w-full">
                             <table className="min-w-full bg-white">
                                 <thead>
                                     <tr>
-                                        <th className="py-2 px-4 border-b">#</th>
-                                        <th className="py-2 px-4 border-b">Name</th>
-                                        <th className="py-2 px-4 border-b">Reg. Number</th>
-                                        <th className="py-2 px-4 border-b">Appointment No</th>
-                                        <th className="py-2 px-4 border-b">Appointment Date</th>
-                                        <th className="py-2 px-4 border-b">Created At</th>
-                                        <th className="py-2 px-4 border-b">Updated At</th>
+                                        <th className="py-2 px-4 border-b text-left">#</th>
+                                        <th className="py-2 px-4 border-b text-left">Name</th>
+                                        <th className="py-2 px-4 border-b text-left">Reg. Number</th>
+                                        <th className="py-2 px-4 border-b text-left">Appointment No</th>
+                                        <th className="py-2 px-4 border-b text-left min-w-[120px]">Appointment Date</th>
+                                        <th className="py-2 px-4 border-b text-left min-w-[150px]">Created At</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {appointments.map((appointment, index) => (
                                         <tr key={appointment._id} className={index % 2 === 0 ? 'bg-gray-100' : ''}>
                                             <td className="py-2 px-4 border-b">{index + 1}</td>
-                                            <td className="py-2 px-4 border-b">{appointment.name}</td>
-                                            <td className="py-2 px-4 border-b">{appointment.regNumber}</td>
+                                            <td className="py-2 px-4 border-b whitespace-nowrap">{appointment.name}</td>
+                                            <td className="py-2 px-4 border-b whitespace-nowrap">{appointment.regNumber}</td>
                                             <td className="py-2 px-4 border-b">{appointment.appointNo}</td>
-                                            <td className="py-2 px-4 border-b">{new Date(appointment.appointDate).toLocaleDateString()}</td>
-                                            <td className="py-2 px-4 border-b">{new Date(appointment.createdAt).toLocaleString()}</td>
-                                            <td className="py-2 px-4 border-b">{new Date(appointment.updatedAt).toLocaleString()}</td>
+                                            <td className="py-2 px-4 border-b whitespace-nowrap">{new Date(appointment.appointDate).toLocaleDateString()}</td>
+                                            <td className="py-2 px-4 border-b whitespace-nowrap">{new Date(appointment.createdAt).toLocaleString()}</td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -169,32 +163,32 @@ function AdminDashboard() {
             </div>
 
             {/* Hours Section */}
-            <div className="flex items-center justify-center bg-gray-100 py-10">
-                <div className=' px-10 py-12 shadow-md bg-white rounded-lg'>
-                    <div className="grid grid-cols-2 gap-1">
-                        <div className='col-span-2 flex items-center justify-center px-10 py-2 text-xl font-bold'><h2>Consultation Hours</h2></div>
-                        <div className='col-span-2 flex justify-center px-4 py-2'>
-                            <table className="table-auto overflow-scroll">
+            <div className="flex items-center justify-center bg-gray-100 py-10 px-4">
+                <div className='w-full max-w-lg px-4 py-6 lg:px-10 lg:py-12 shadow-md bg-white rounded-lg'>
+                    <div className="flex flex-col">
+                        <div className='flex items-center justify-center px-4 py-2 text-xl font-bold'><h2>Consultation Hours</h2></div>
+                        <div className='flex justify-center px-4 py-2'>
+                            <table className="w-full">
                                 <tbody>
-                                    <tr>
-                                        <td>Oral Helthcare : &nbsp;</td>
-                                        <td>02.00pm-04.00pm	(Wednesday)</td>
+                                    <tr className='border-b border-gray-200'>
+                                        <td className='font-semibold whitespace-nowrap py-2'>Oral Helthcare :</td>
+                                        <td className='text-right py-2'>02.00pm-04.00pm (Wednesday)</td>
+                                    </tr>
+                                    <tr className='border-b border-gray-200'>
+                                        <td className='font-semibold whitespace-nowrap py-2'>Health Center :</td>
+                                        <td className='text-right py-2'>08.30am-01.30pm</td>
+                                    </tr>
+                                    <tr className='border-b border-gray-200'>
+                                        <td className='font-semibold whitespace-nowrap py-2'>Public Health Work :</td>
+                                        <td className='text-right py-2'>02.00pm-04.00pm</td>
+                                    </tr>
+                                    <tr className='border-b border-gray-200'>
+                                        <td className='font-semibold whitespace-nowrap py-2'>Officie Work :</td>
+                                        <td className='text-right py-2'>02.00pm-04.00pm</td>
                                     </tr>
                                     <tr>
-                                        <td>Health Center : &nbsp;</td>
-                                        <td>08.30am-01.30pm</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Public Health Work : &nbsp;</td>
-                                        <td>02.00pm-04.00pm</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Officie Work : &nbsp;</td>
-                                        <td>02.00pm-04.00pm</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Emergencies : &nbsp;</td>
-                                        <td>08.30am-04.00pm</td>
+                                        <td className='font-semibold whitespace-nowrap py-2'>Emergencies :</td>
+                                        <td className='text-right py-2'>08.30am-04.00pm</td>
                                     </tr>
                                 </tbody>
                             </table>

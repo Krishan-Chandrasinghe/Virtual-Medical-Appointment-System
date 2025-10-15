@@ -46,9 +46,9 @@ function Dashboard() {
         <>
             <NavBar />
             {/* Hero Section */}
-            <div className="flex items-center justify-center bg-gray-100 py-10">
+            <div className="flex items-center justify-center bg-gray-100 py-10 px-4">
                 <div className='flex flex-col items-center gap-4'>
-                    <h1 className="text-4xl font-bold text-[#3a1031] mt-2">Online Appointment System</h1>
+                    <h1 className="text-3xl sm:text-4xl text-center font-bold text-[#3a1031] mt-2">Online Appointment System</h1>
                     <h3 className="text-xl font-bold text-[#3a1031] mt-2">Make an Appointment</h3>
                     <Link to='/appointment' className="bg-[#3a1031] cursor-pointer text-center hover:bg-[#6b1d5c] text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">
                         Book an Appointment
@@ -57,13 +57,13 @@ function Dashboard() {
             </div>
 
             {/* Status Section */}
-            <div className="flex items-center justify-center bg-gray-100 py-10">
-                <div className='flex items-center justify-around gap-4'>
-                    <div className='flex flex-col items-center justify-center h-40 w-72 px-10 py-12 shadow-md bg-white rounded-lg'>
+            <div className="flex items-center justify-center bg-gray-100 py-10 px-4">
+                <div className='flex flex-col md:flex-row items-center justify-around gap-4 w-full max-w-4xl'>
+                    <div className='flex flex-col items-center justify-center h-40 w-full md:w-72 px-10 py-12 shadow-md bg-white rounded-lg mb-4 md:mb-0'>
                         <h2>{centreStatus.isCentreOpen ? 'Open' : 'Closed'}</h2>
                         <h2>Doctor {centreStatus.isDoctorAvailable ? 'Available' : 'Not Available'}</h2>
                     </div>
-                    <div className='flex flex-col items-start justify-center h-40 w-72 px-10 py-12 shadow-md bg-white rounded-lg'>
+                    <div className='flex flex-col items-start justify-center h-40 w-full md:w-72 px-10 py-12 shadow-md bg-white rounded-lg'>
                         <h3>Your Appointment No: {userAppointmentNo === 0 ? 'No Appointment' : userAppointmentNo}</h3>
                         <h3>Current Appointment No: {centreStatus.currentAppointmentNo}</h3>
                         <h3>Total Appointments: {todayCount}</h3>
@@ -72,32 +72,32 @@ function Dashboard() {
             </div>
 
             {/* Hours Section */}
-            <div className="flex items-center justify-center bg-gray-100 py-10">
-                <div className=' px-10 py-12 shadow-md bg-white rounded-lg'>
-                    <div className="grid grid-cols-2 gap-1">
-                        <div className='col-span-2 flex items-center justify-center px-10 py-2 text-xl font-bold'><h2>Consultation Hours</h2></div>
-                        <div className='col-span-2 flex justify-center px-4 py-2'>
-                            <table className="table-auto overflow-scroll">
+            <div className="flex items-center justify-center bg-gray-100 py-10 px-4">
+                <div className='w-full max-w-lg px-4 py-6 lg:px-10 lg:py-12 shadow-md bg-white rounded-lg'>
+                    <div className="flex flex-col">
+                        <div className='flex items-center justify-center px-4 py-2 text-xl font-bold'><h2>Consultation Hours</h2></div>
+                        <div className='flex justify-center px-4 py-2'>
+                            <table className="w-full">
                                 <tbody>
-                                    <tr>
-                                        <td>Oral Helthcare : &nbsp;</td>
-                                        <td>02.00pm-04.00pm	(Wednesday)</td>
+                                    <tr className='border-b border-gray-200'>
+                                        <td className='font-semibold whitespace-nowrap py-2'>Oral Helthcare :</td>
+                                        <td className='text-right py-2'>02.00pm-04.00pm (Wednesday)</td>
+                                    </tr>
+                                    <tr className='border-b border-gray-200'>
+                                        <td className='font-semibold whitespace-nowrap py-2'>Health Center :</td>
+                                        <td className='text-right py-2'>08.30am-01.30pm</td>
+                                    </tr>
+                                    <tr className='border-b border-gray-200'>
+                                        <td className='font-semibold whitespace-nowrap py-2'>Public Health Work :</td>
+                                        <td className='text-right py-2'>02.00pm-04.00pm</td>
+                                    </tr>
+                                    <tr className='border-b border-gray-200'>
+                                        <td className='font-semibold whitespace-nowrap py-2'>Officie Work :</td>
+                                        <td className='text-right py-2'>02.00pm-04.00pm</td>
                                     </tr>
                                     <tr>
-                                        <td>Health Center : &nbsp;</td>
-                                        <td>08.30am-01.30pm</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Public Health Work : &nbsp;</td>
-                                        <td>02.00pm-04.00pm</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Officie Work : &nbsp;</td>
-                                        <td>02.00pm-04.00pm</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Emergencies : &nbsp;</td>
-                                        <td>08.30am-04.00pm</td>
+                                        <td className='font-semibold whitespace-nowrap py-2'>Emergencies :</td>
+                                        <td className='text-right py-2'>08.30am-04.00pm</td>
                                     </tr>
                                 </tbody>
                             </table>

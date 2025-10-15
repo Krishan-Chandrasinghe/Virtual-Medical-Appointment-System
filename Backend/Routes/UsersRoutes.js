@@ -1,6 +1,6 @@
 import express from 'express';
 // import rateLimit from 'express-rate-limit';
-import { signupUser, loginUser, logoutUser, verifyUser } from '../Controllers/UsersController.js';
+import { signupUser, loginUser, logoutUser, verifyUser, getUserDashbordData } from '../Controllers/UsersController.js';
 
 const router = express.Router();
 
@@ -21,5 +21,7 @@ router.post('/login', loginUser);
 router.post('/logout', logoutUser);
 
 router.get('/verify', verifyUser);
+
+router.get('/getUserDashbordData', getUserDashbordData);
 
 export default router;

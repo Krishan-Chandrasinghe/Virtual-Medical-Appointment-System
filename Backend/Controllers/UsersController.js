@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import Users from '../Models/UsersModel.js';
+import CentreStatusModel from '../Models/CentreStatusModel.js'
+import AppointmentsModel from '../Models/AppointmentsModel.js';
 
 const attachResponseCookie = (_id, res) => {
     const token = jwt.sign({ _id }, process.env.JWT_SECRET_STRING, { expiresIn: '3h' });
@@ -120,4 +122,34 @@ const verifyUser = async (req, res) => {
     }
 }
 
-export { signupUser, loginUser, logoutUser, verifyUser };
+const getUserDashbordData = async (req, res) => {
+    const regNumber = req.query.regNumber;
+    try {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+
+        const totalAppointments = await AppointmentsModel.countDocuments({
+            appointDate: {
+                $gte: today,
+                $lt: tomorrow
+            }
+        });
+        const centreStatus = await CentreStatusModel.findById('CENTRE_STATUS_CONFIG');
+        const userAppointment = await AppointmentsModel.findOne({ regNumber });
+
+        res.status(200).json({
+            centreStatus,
+            totalAppointments,
+            userAppointmentNo: userAppointment.appointNo,
+            message: 'User dashbord data fetching success.'
+        })
+
+    } catch (error) {
+        console.error("getUserDashbordData error ", error);
+    }
+}
+
+export { signupUser, loginUser, logoutUser, verifyUser, getUserDashbordData };

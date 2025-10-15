@@ -1,23 +1,48 @@
-import React from 'react'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import io from 'socket.io-client'
 import api from '../api/apiConfig'
 import NavBar from '../components/NavBar'
 import Footer from '../components/Footer'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 function Dashboard() {
     const [todayCount, setTodayCount] = useState(0);
-    useEffect(() => {
-        async function totalAppointments() {
-            try {
-                const resp = await api.get('/appointments/getTotalAppointments');
-                console.log('this is today count: ', resp.data.totalAppointments)
-                setTodayCount(resp.data.totalAppointments);
-            } catch (error) {
-                console.error(error);
-            }
+    const [userAppointmentNo, setUserAppointmentNo] = useState(0);
+    const [centreStatus, setCentreStatus] = useState({
+        isCentreOpen: false,
+        isDoctorAvailable: false,
+        currentAppointmentNo: 0
+    });
+
+    const { user } = useAuthContext();
+
+    async function getUserDashbordData() {
+        try {
+            const resp = await api.get(`/users/getUserDashbordData?regNumber=${user.regNumber}`);
+            console.log('this is from frontend: ', resp.data)
+            setTodayCount(resp.data.totalAppointments);
+            setCentreStatus(resp.data.centreStatus);
+            setUserAppointmentNo(resp.data.userAppointmentNo);
+        } catch (error) {
+            console.error(error);
         }
-        totalAppointments();
+    }
+    useEffect(() => {
+        getUserDashbordData();
+
+        const socket = io('http://localhost:5000');
+        console.log("Socket.IO: Connecting to server...");
+
+        socket.on('centreStatusUpdated', (status) => {
+            console.log("Client received status: ", status);
+            setCentreStatus(status);
+        })
+
+        return () => {
+            console.log("Socket.IO: Disconecting a connection...");
+            socket.disconnect();
+        }
     }, []);
     return (
         <>
@@ -37,12 +62,12 @@ function Dashboard() {
             <div className="flex items-center justify-center bg-gray-100 py-10">
                 <div className='flex items-center justify-around gap-4'>
                     <div className='flex flex-col items-center justify-center h-40 w-72 px-10 py-12 shadow-md bg-white rounded-lg'>
-                        <h2>Open</h2>
-                        <h2>Doctor Avalable</h2>
+                        <h2>{centreStatus.isCentreOpen ? 'Open' : 'Closed'}</h2>
+                        <h2>Doctor {centreStatus.isDoctorAvailable ? 'Available' : 'Not Available'}</h2>
                     </div>
                     <div className='flex flex-col items-start justify-center h-40 w-72 px-10 py-12 shadow-md bg-white rounded-lg'>
-                        <h3>Your Appointment No: </h3>
-                        <h3>Current Appointment No: </h3>
+                        <h3>Your Appointment No: {userAppointmentNo === 0 ? 'No Appointment' : userAppointmentNo}</h3>
+                        <h3>Current Appointment No: {centreStatus.currentAppointmentNo}</h3>
                         <h3>Total Appointments: {todayCount}</h3>
                     </div>
                 </div>

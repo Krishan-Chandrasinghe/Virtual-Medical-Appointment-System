@@ -5,6 +5,7 @@ import LandingPage from '../views/LandingPage';
 import Dashboard from '../views/Dashboard';
 import AppointmentBook from '../views/AppointmentBook';
 import UserSignUp from '../views/UserSignUp';
+import AdminDashboard from '../views/AdminDashboard';
 
 function RouteHandler({ type = 'public', component: Component }) {
   const { user } = useAuthContext();
@@ -27,7 +28,7 @@ const router = createBrowserRouter([
   // },
   {
     path: '/',
-    element: <UserSignUp />
+    element: <AdminDashboard />
   },
   {
     path: '/login',

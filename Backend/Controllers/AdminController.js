@@ -1,4 +1,5 @@
 import CentreStatusModel from "../Models/CentreStatusModel.js";
+import AppointmentsModel from "../Models/AppointmentsModel.js"
 
 export const updateCentreStatus = async (req, res) => {
     const {
@@ -22,5 +23,30 @@ export const updateCentreStatus = async (req, res) => {
         }
     } catch (error) {
         console.error("Update centre status failed. ", error);
+    }
+}
+
+export const getAdminDashbordData = async (req, res) => {
+    try {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+
+        const totalAppointments = await AppointmentsModel.countDocuments({
+            appointDate: {
+                $gte: today,
+                $lt: tomorrow
+            }
+        });
+        const centreStatus = await CentreStatusModel.findById('CENTRE_STATUS_CONFIG');
+        const appointments = await AppointmentsModel.find({});
+
+        res.status(200).json({ centreStatus, totalAppointments, appointments, message: 'Admin dashbord data fetching success.' })
+
+    } catch (error) {
+        res.status(500).json({ message: "Error getting Admin Dashbord Data." });
+        console.error("Error getting Admin Dashbord Data.");
     }
 }

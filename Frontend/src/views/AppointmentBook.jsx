@@ -38,13 +38,13 @@ function AppointmentBook() {
             setMessage(resp.data.message);
 
             setTimeout(() => {
-                navigate("/dashboard");
+                navigate("/dashboard", { replace: true });
             }, 2000);
 
         } catch (error) {
             setMessage(error?.response?.data?.error || 'Couldn\'t make an appointment!');
             setTimeout(() => {
-                navigate("/dashboard");
+                navigate("/dashboard", { replace: true });
             }, 2000);
             console.error("Couldn't make an appointment. ", error);
         }
@@ -84,7 +84,7 @@ function AppointmentBook() {
                     {!message &&
                         <div className='flex flex-col gap-2 mt-5'>
                             <button type="submit" onClick={handleSubmit} className='bg-[#3a1031] border-[#3a1031] border-2 cursor-pointer text-center hover:bg-[#6b1d5c] text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300'>Confirm</button>
-                            <button type="submit" onClick={() => navigate("/dashboard")} className='border-[#3a1031] border-2 cursor-pointer text-center hover:bg-[#6b1d5b23] text-[#3a1031] px-4 py-2 rounded-md text-sm font-medium transition duration-300'>Cancel</button>
+                            <button type="submit" onClick={() => navigate("/dashboard", { replace: true })} className='border-[#3a1031] border-2 cursor-pointer text-center hover:bg-[#6b1d5b23] text-[#3a1031] px-4 py-2 rounded-md text-sm font-medium transition duration-300'>Cancel</button>
                         </div>
                     }
                     {message && (

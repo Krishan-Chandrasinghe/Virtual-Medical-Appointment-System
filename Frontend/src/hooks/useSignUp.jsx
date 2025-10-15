@@ -16,7 +16,7 @@ function useSignUp() {
             setMessage('Sign up successful.')
             setIsLoading(false);
             setTimeout(() => {
-                navigate('/login');
+                navigate('/login', { replace: true });
             }, 2000);
         } catch (error) {
             console.error(error)

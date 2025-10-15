@@ -10,9 +10,9 @@ const attachResponseCookie = (_id, res) => {
     res.cookie('authToken', token, {
         path: '/', // if path is "/api" that cookie works for only "/api" path requests. not for others
         httpOnly: true,
-        secure: process.env.COOKIE_SECURE, // when https - true, http - false
+        secure: process.env.NODE_ENV === 'production', // when https - true, http - false
         sameSite: process.env.COOKIE_SAMESITE, // strict/lax => strict - use in different domain/subdomain. lax - allows other sites get request nor for other type requests(eg: link sharing on social media)
-        maxAge: process.env.COOKIE_MAX_AGE
+        maxAge: 15*60*1000
     })
 }
 
@@ -78,7 +78,7 @@ const logoutUser = (req, res) => {
     res.clearCookie('authToken', {
         path: '/',
         httpOnly: true,
-        secure: process.env.COOKIE_SECURE, // when https - true, http - false
+        secure: process.env.NODE_ENV === 'production', // when https - true, http - false
         sameSite: process.env.COOKIE_SAMESITE, // strict/lax => strict - use in different domain/subdomain. lax - allows other sites get request nor for other type requests(eg: link sharing on social media)
     })
     res.status(200).json({ message: 'Logged out successfully!' });

@@ -6,9 +6,9 @@ import api from '../api/apiConfig';
 export function useLogin() {
     const [isLoading, setIsLoading] = useState(null);
     const [error, setError] = useState(null);
-    
+
     const navigate = useNavigate();
-    
+
     const { user, dispatch } = useAuthContext();
 
     const login = async (email, password) => {
@@ -20,10 +20,7 @@ export function useLogin() {
 
             dispatch({ type: 'LOGIN', payload: response.data.user });
 
-            // user && user.role==='admin' ? navigate('/adminDashboard') : navigate('/dashboard');
-            console.log("Current user role: ",user.role)
-
-            if(user.role==='admin')
+            if (user.role === 'admin')
                 navigate('/adminDashboard');
             else
                 navigate('/dashboard');

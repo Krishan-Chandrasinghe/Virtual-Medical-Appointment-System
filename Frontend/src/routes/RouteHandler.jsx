@@ -4,11 +4,10 @@ import { useAuthContext } from "../hooks/useAuthContext";
 function RouteHandler({ type = 'public', component: Component, allowedRoles }) {
   const { user } = useAuthContext();
 
-  // Public routes - redirect logged-in users to their dashboard
+  // Public routes - redirect login users to dashboard
   if (type === 'public') {
     if (!user) return <Component />;
     
-    // Redirect based on role
     const redirectPath = user.role === 'admin' ? '/adminDashboard' : '/dashboard';
     return <Navigate to={redirectPath} replace />;
   }
@@ -17,9 +16,7 @@ function RouteHandler({ type = 'public', component: Component, allowedRoles }) {
   if (type === 'protected') {
     if (!user) return <Navigate to="/login" replace />;
     
-    // Check user has required role
     if (allowedRoles && !allowedRoles.includes(user.role)) {
-      // Redirect to appropriate dashboard
       const redirectPath = user.role === 'admin' ? '/adminDashboard' : '/dashboard';
       return <Navigate to={redirectPath} replace />;
     }

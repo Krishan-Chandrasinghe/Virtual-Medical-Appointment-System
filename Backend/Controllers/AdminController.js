@@ -26,7 +26,7 @@ export const updateCentreStatus = async (req, res) => {
     }
 }
 
-export const getAdminDashbordData = async (req, res) => {
+export const getAdminDashboardData = async (req, res) => {
     try {
         const today = new Date();
         today.setHours(0, 0, 0, 0);

@@ -38,7 +38,7 @@ const io = initializeSocketIO(httpServer);
 // connect to routes with middlewares
 app.use('/users', UsersRoutes);
 app.use('/appointments', AppointmentsRoutes);
-app.use('/admin', attachIo(io), AdminRoutes);
+app.use('/admins', attachIo(io), AdminRoutes);
 
 // Default route
 app.get('/', (req, res) => {

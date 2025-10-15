@@ -12,15 +12,13 @@ import requestAuth from '../Middlewares/requestAuth.js';
 
 const router = express.Router();
 
-router.use(requestAuth);
+// router.use(requestAuth);
 
 router.post('/', makeAppointment);
 
 router.get('/', getAllAppointments);
 
 router.get('/nextAppointData', getNextAppointmentData);
-
-router.get('/getTotalAppointments', getTotalAppointments);
 
 router.get('/:_id', getAppointment);
 

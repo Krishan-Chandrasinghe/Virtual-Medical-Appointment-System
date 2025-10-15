@@ -9,7 +9,7 @@ dotenv.config();
 
 import UsersRoutes from './Routes/UsersRoutes.js';
 import AppointmentsRoutes from './Routes/AppointmentsRoutes.js';
-import AdminRoutes  from './Routes/AdminRoutes.js'
+import AdminRoutes from './Routes/AdminRoutes.js'
 import initializeSocketIO from './util/socketHandler.js';
 import attachIo from './Middlewares/attachIo.js';
 import requestAuth from './Middlewares/requestAuth.js';
@@ -37,8 +37,8 @@ const io = initializeSocketIO(httpServer);
 
 // connect to routes with middlewares
 app.use('/users', UsersRoutes);
-app.use('/appointments', AppointmentsRoutes);
-app.use('/admins', attachIo(io), AdminRoutes);
+app.use('/appointments', requestAuth, AppointmentsRoutes);
+app.use('/admins', requestAuth, attachIo(io), AdminRoutes);
 
 // Default route
 app.get('/', (req, res) => {

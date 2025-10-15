@@ -1,5 +1,6 @@
 import express from 'express';
 // import rateLimit from 'express-rate-limit';
+import requestAuth from '../Middlewares/requestAuth.js';
 import { signupUser, loginUser, logoutUser, verifyUser, getUserDashbordData } from '../Controllers/UsersController.js';
 
 const router = express.Router();
@@ -22,6 +23,6 @@ router.post('/logout', logoutUser);
 
 router.get('/verify', verifyUser);
 
-router.get('/getUserDashbordData', getUserDashbordData);
+router.get('/getUserDashbordData', requestAuth, getUserDashbordData);
 
 export default router;

@@ -7,11 +7,8 @@ import {
     makeAppointment,
     updateAppointment
 } from '../Controllers/AppointmentsController.js';
-import requestAuth from '../Middlewares/requestAuth.js';
 
 const router = express.Router();
-
-// router.use(requestAuth);
 
 router.post('/', makeAppointment);
 

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import UniLogo from '../assets/UniLogo.webp';
 import { useAuthContext } from '../hooks/useAuthContext';
 import api from '../api/apiConfig';
@@ -7,10 +7,17 @@ import api from '../api/apiConfig';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, dispatch } = useAuthContext();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     dispatch({ type: 'LOGOUT' });
-    await api.post('users/logout');
+    try {
+      await api.post('users/logout');
+      navigate('/', { replace: true });
+    } catch (error) {
+      console.error(error);
+    }
+
   }
 
   return (

@@ -20,7 +20,6 @@ function Dashboard() {
     async function getUserDashbordData() {
         try {
             const resp = await api.get(`/users/getUserDashbordData?regNumber=${user.regNumber}`);
-            console.log('this is from frontend: ', resp.data)
             setTodayCount(resp.data.totalAppointments);
             setCentreStatus(resp.data.centreStatus);
             setUserAppointmentNo(resp.data.userAppointmentNo);
@@ -35,7 +34,6 @@ function Dashboard() {
         console.log("Socket.IO: Connecting to server...");
 
         socket.on('centreStatusUpdated', (status) => {
-            console.log("Client received status: ", status);
             setCentreStatus(status);
         })
 

@@ -17,7 +17,6 @@ function AdminDashboard() {
     async function getAdminDashbordData() {
         try {
             const resp = await api.get('/admins/getAdminDashboardData');
-            console.log('this is today count: ', resp.data);
             setTodayCount(resp.data.totalAppointments);
             setAppointments(resp.data.appointments);
             setCentreStatus(resp.data.centreStatus);
@@ -38,7 +37,7 @@ function AdminDashboard() {
         e.preventDefault();
         try {
             const resp = await api.patch('/admins/centreStatusUpdate', centreStatus);
-            console.log("Center status update: ", resp.data.message)
+            window.alert(resp.data.message);
         } catch (error) {
             console.error(error);
         }
@@ -51,7 +50,6 @@ function AdminDashboard() {
         console.log("Socket.IO: Connecting to server...");
 
         socket.on('centreStatusUpdated', (status) => {
-            console.log("Client received status: ", status);
             setCentreStatus(status);
         })
 

@@ -9,7 +9,7 @@ export function useLogin() {
     
     const navigate = useNavigate();
     
-    const { dispatch } = useAuthContext();
+    const { user, dispatch } = useAuthContext();
 
     const login = async (email, password) => {
         setError(null);
@@ -20,12 +20,18 @@ export function useLogin() {
 
             dispatch({ type: 'LOGIN', payload: response.data.user });
 
-            navigate('/dashboard');
+            // user && user.role==='admin' ? navigate('/adminDashboard') : navigate('/dashboard');
+            console.log("Current user role: ",user.role)
+
+            if(user.role==='admin')
+                navigate('/adminDashboard');
+            else
+                navigate('/dashboard');
 
             setIsLoading(false);
 
         } catch (error) {
-            setError(error.response.data.error);
+            setError(error?.response?.data?.error || error);
             setIsLoading(false);
         }
 

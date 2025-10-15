@@ -16,7 +16,7 @@ function AdminDashboard() {
 
     async function getAdminDashbordData() {
         try {
-            const resp = await api.get('/admins/getAdminDashbordData');
+            const resp = await api.get('/admins/getAdminDashboardData');
             console.log('this is today count: ', resp.data);
             setTodayCount(resp.data.totalAppointments);
             setAppointments(resp.data.appointments);

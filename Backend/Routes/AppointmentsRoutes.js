@@ -4,7 +4,6 @@ import {
     getAllAppointments,
     getAppointment,
     getNextAppointmentData,
-    getTotalAppointments,
     makeAppointment,
     updateAppointment
 } from '../Controllers/AppointmentsController.js';

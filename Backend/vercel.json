@@ -8,28 +8,8 @@
   ],
   "routes": [
     {
-      "src": "/",
-      "dest": "/"
-    },
-    {
-      "src": "/login",
-      "dest": "/"
-    },
-    {
-      "src": "/signup",
-      "dest": "/"
-    },
-    {
-      "src": "/dashboard",
-      "dest": "/"
-    },
-    {
-      "src": "/adminDashboard",
-      "dest": "/"
-    },
-    {
-      "src": "/appointment",
-      "dest": "/"
+      "src": "/(.*)",
+      "dest": "/server.js"
     }
   ]
 }

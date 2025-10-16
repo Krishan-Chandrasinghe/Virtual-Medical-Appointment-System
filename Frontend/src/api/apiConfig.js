@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000', // Replace with your backend API URL
+  baseURL: 'https://virtual-medical-appointment-system-backend.vercel.app', // Replace with your backend API URL
   withCredentials: true,
 });
 

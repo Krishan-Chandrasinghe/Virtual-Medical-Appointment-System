@@ -164,7 +164,6 @@ function UserSignUp() {
                                     name="drugAllergies"
                                     type="text"
                                     placeholder='Eg;- Penicillin, Aspirin, Albuprofen'
-                                    required
                                     className="block w-full rounded-md border-0 focus:outline-0 bg-white/75 p-1.5 text-[#3A1031] shadow-sm ring-1 ring-inset ring-[#3A1031] focus:ring-2 focus:ring-inset focus:ring-[#3a1031] sm:text-sm sm:leading-6"
                                     value={user.drugAllergies}
                                     onChange={handleChange}

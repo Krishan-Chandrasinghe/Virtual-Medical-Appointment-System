@@ -9,7 +9,6 @@ const usersSchema = new mongoose.Schema({
     type: Date,
     default: function() {
       const expire = new Date(this.appointDate);
-      expire.setDate(expire.getDate() + 1);
       expire.setHours(23, 59, 59, 999);
       return expire;
     }

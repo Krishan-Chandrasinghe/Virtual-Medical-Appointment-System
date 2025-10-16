@@ -1,9 +1,46 @@
-import React from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import io from 'socket.io-client'
 import NavBar from '../components/NavBar'
 import Footer from '../components/Footer'
+import api from '../api/apiConfig'
+
 
 function LandingPage() {
+    const [todayCount, setTodayCount] = useState(0);
+    const [centreStatus, setCentreStatus] = useState({
+        isCentreOpen: false,
+        isDoctorAvailable: false,
+        currentAppointmentNo: 0
+    });
+
+    async function getLandingData() {
+        try {
+            const resp = await api.get('/landing/getLandingData');
+            console.log(resp.data)
+            setTodayCount(resp.data.totalAppointments);
+            setCentreStatus(resp.data.centreStatus);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    useEffect(() => {
+        getLandingData();
+
+        const socket = io('http://localhost:5000');
+        console.log("Socket.IO: Connecting to server...");
+
+        socket.on('centreStatusUpdated', (status) => {
+            setCentreStatus(status);
+        });
+
+        return () => {
+            console.log("Socket.IO: Disconecting a connection...");
+            socket.disconnect();
+        }
+    }, []);
+
     return (
         <>
             <NavBar />
@@ -23,12 +60,12 @@ function LandingPage() {
             <div className="flex items-center justify-center bg-gray-100 py-10 px-4">
                 <div className='flex flex-col md:flex-row items-center justify-around gap-4 w-full max-w-4xl'>
                     <div className='flex flex-col items-center justify-center h-40 w-full md:w-72 px-10 py-12 shadow-md bg-white rounded-lg mb-4 md:mb-0'>
-                        <h2 className='text-lg sm:text-xl font-semibold'>Open</h2>
-                        <h2 className='text-lg sm:text-xl font-semibold'>Doctor Available</h2>
+                        <h2 className='text-lg sm:text-xl font-semibold'>{centreStatus.isCentreOpen ? 'Open' : 'Closed'}</h2>
+                        <h2 className='text-lg sm:text-xl font-semibold'>Doctor {centreStatus.isDoctorAvailable ? 'Available' : 'Not Available'}</h2>
                     </div>
                     <div className='flex flex-col items-start justify-center h-40 w-full md:w-72 px-10 py-12 shadow-md bg-white rounded-lg'>
-                        <h3 className='text-md sm:text-lg'>Current Appointment No: </h3>
-                        <h3 className='text-md sm:text-lg'>Total Appointments: </h3>
+                        <h3 className='text-md sm:text-lg'>Current Appointment No: {centreStatus.currentAppointmentNo}</h3>
+                        <h3 className='text-md sm:text-lg'>Total Appointments: {todayCount}</h3>
                     </div>
                 </div>
             </div>

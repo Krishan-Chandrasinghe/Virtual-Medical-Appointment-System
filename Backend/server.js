@@ -8,6 +8,7 @@ import http from 'http';
 dotenv.config();
 
 import UsersRoutes from './Routes/UsersRoutes.js';
+import LandingRoutes from './Routes/LandingRoutes.js'
 import AppointmentsRoutes from './Routes/AppointmentsRoutes.js';
 import AdminRoutes from './Routes/AdminRoutes.js'
 import initializeSocketIO from './util/socketHandler.js';
@@ -37,6 +38,7 @@ const io = initializeSocketIO(httpServer);
 
 // connect to routes with middlewares
 app.use('/users', UsersRoutes);
+app.use('/landing', LandingRoutes);
 app.use('/appointments', requestAuth, AppointmentsRoutes);
 app.use('/admins', requestAuth, attachIo(io), AdminRoutes);
 

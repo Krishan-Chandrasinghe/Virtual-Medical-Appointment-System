@@ -52,8 +52,8 @@ mongoose.connect(process.env.MONGO_URI)
     .then(() => {
 
         // Listen to the server
-        httpServer.listen(process.env.SERVER_PORT, process.env.SERVER_HOST, () => {
-            console.log(`Database connected.\nServer is running on http://${process.env.SERVER_HOST}:${process.env.SERVER_PORT}.`);
+        httpServer.listen(process.env.PORT, process.env.HOST, () => {
+            console.log(`Database connected.\nServer is running on http://${process.env.HOST}:${process.env.PORT}.`);
         })
 
     }).catch((error) => {

@@ -16,7 +16,7 @@ const loginLimiter = rateLimit({
 router.post('/signup', signupUser);
 
 // Log in
-router.post('/login', loginLimiter, loginUser); // use this after finished the testing for prevent brute force attacks. because its blocking attempts for specific IP.
+router.post('/login', loginUser); // use this after finished the testing for prevent brute force attacks. because its blocking attempts for specific IP.
 // router.post('/login', loginUser);
 
 router.post('/logout', logoutUser);

@@ -28,7 +28,7 @@ function LandingPage() {
     useEffect(() => {
         getLandingData();
 
-        const socket = io('http://localhost:5000');
+        const socket = io(import.meta.env.VITE_BACKEND_URL);
         console.log("Socket.IO: Connecting to server...");
 
         socket.on('centreStatusUpdated', (status) => {

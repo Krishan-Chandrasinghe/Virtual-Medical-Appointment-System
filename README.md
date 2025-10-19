@@ -21,8 +21,11 @@ A full-stack web application for managing virtual medical appointments built wit
 ### Security Features
 - **Rate Limiting** - Protection against brute force attacks
 - **JWT Authentication** - Secure token-based authentication
+- **Hash Password** - Passwords are hashed using bcrypt
+- **CORS configuration** - Used for frontend-backend communication
 - **Role-based Access Control** - Separate permissions for users and admins
 - **Input Validation** - Comprehensive form validation and sanitization
+- **Environment variables** - Used for sensitive data configuration
 
 ## 🛠️ Tech Stack
 

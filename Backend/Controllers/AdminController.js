@@ -28,22 +28,10 @@ export const updateCentreStatus = async (req, res) => {
 
 export const getAdminDashboardData = async (req, res) => {
     try {
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        const tomorrow = new Date(today);
-        tomorrow.setDate(tomorrow.getDate() + 1);
-
-        const totalAppointments = await AppointmentsModel.countDocuments({
-            appointDate: {
-                $gte: today,
-                $lt: tomorrow
-            }
-        });
         const centreStatus = await CentreStatusModel.findById('CENTRE_STATUS_CONFIG');
         const appointments = await AppointmentsModel.find({});
 
-        res.status(200).json({ centreStatus, totalAppointments, appointments, message: 'Admin dashbord data fetching success.' })
+        res.status(200).json({ centreStatus, appointments, message: 'Admin dashbord data fetching success.' })
 
     } catch (error) {
         res.status(500).json({ message: "Error getting Admin Dashbord Data." });

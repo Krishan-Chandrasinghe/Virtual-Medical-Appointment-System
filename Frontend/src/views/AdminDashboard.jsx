@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import io from 'socket.io-client'
 import api from '../api/apiConfig'
 import NavBar from '../components/NavBar'
@@ -11,7 +10,6 @@ import { FaShopLock } from "react-icons/fa6";
 import { GrUserManager } from "react-icons/gr";
 
 function AdminDashboard() {
-    const [todayCount, setTodayCount] = useState(0);
     const [appointments, setAppointments] = useState([]);
     const [centreStatus, setCentreStatus] = useState({
         isCentreOpen: false,
@@ -22,7 +20,6 @@ function AdminDashboard() {
     async function getAdminDashbordData() {
         try {
             const resp = await api.get('/admins/getAdminDashboardData');
-            setTodayCount(resp.data.totalAppointments);
             setAppointments(resp.data.appointments);
             setCentreStatus(resp.data.centreStatus);
         } catch (error) {
@@ -56,7 +53,14 @@ function AdminDashboard() {
 
         socket.on('centreStatusUpdated', (status) => {
             setCentreStatus(status);
-        })
+        });
+
+        socket.on('appointmentAdded',(newAppointment)=>{
+            setAppointments((prev)=>([
+                ...prev,
+                newAppointment
+            ]));
+        });
 
         return () => {
             console.log("Socket.IO: Disconecting a connection...");
@@ -125,7 +129,7 @@ function AdminDashboard() {
 
                     {/* All Appointments Table Section */}
                     <div className='flex flex-col items-start justify-start w-full lg:w-3/4 h-auto max-h-96 px-4 py-6 lg:px-10 lg:py-12 shadow-md bg-white rounded-lg overflow-y-auto'>
-                        <h2 className='text-2xl font-bold mb-4'>All Appointments ({todayCount})</h2>
+                        <h2 className='text-2xl font-bold mb-4'>All Appointments ({appointments.length})</h2>
                         <div className="overflow-x-auto w-full">
                             <table className="min-w-full bg-white">
                                 <thead>

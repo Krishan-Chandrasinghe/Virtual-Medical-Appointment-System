@@ -18,7 +18,7 @@ function Login() {
 
     return (
         <>
-            <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+            <div className="flex min-h-screen flex-col justify-center items-center px-6 py-12 lg:px-8">
                 <div className="text-[#3a1031] p-1 rounded-full hover:bg-red-500 hover:text-white border-2 flex items-center justify-center w-7 h-7 font-bold absolute top-2 right-5"><Link to={'/'} >X</Link></div>
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <img className="mx-auto h-20 w-auto" src={UniLogo} alt="Your Company" />

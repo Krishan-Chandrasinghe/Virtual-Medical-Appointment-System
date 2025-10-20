@@ -12,6 +12,8 @@ export const makeAppointment = async (req, res) => {
 
     try {
         const appointment = await AppointmentsModel.MakeAppointment({ name, regNumber, appointNo, appointDate });
+        if (!appointment) throw new Error('Appointment was not booked');
+        req.io.emit('appointmentAdded', appointment);
         res.status(200).json({ appointment, message: 'Appointment is added successfully.' });
 
     } catch (error) {

@@ -5,6 +5,11 @@ import api from '../api/apiConfig'
 import NavBar from '../components/NavBar'
 import Footer from '../components/Footer'
 
+import { FaUserDoctor } from "react-icons/fa6";
+import { FaShop } from "react-icons/fa6";
+import { FaShopLock } from "react-icons/fa6";
+import { GrUserManager } from "react-icons/gr";
+
 function AdminDashboard() {
     const [todayCount, setTodayCount] = useState(0);
     const [appointments, setAppointments] = useState([]);
@@ -59,7 +64,7 @@ function AdminDashboard() {
         }
     }, []);
     return (
-        <>
+        <div className='min-h-screen bg-gray-100 flex flex-col justify-between'>
             <NavBar />
             {/* Hero Section */}
             <div className="flex items-center justify-center bg-gray-100 ">
@@ -71,56 +76,45 @@ function AdminDashboard() {
                 <div className='flex flex-col lg:flex-row items-center lg:items-start justify-around gap-8 w-full max-w-7xl'>
 
                     <form className="space-y-4 w-full max-w-sm" onSubmit={handleSubmit}>
-                        <div className='px-4 py-6 bg-[#fff5fd] rounded-lg border border-[#d6c1d2] flex flex-col gap-2 shadow-lg'>
+                        <div className='px-4 py-6 bg-[#fff5fd] rounded-lg border border-[#d6c1d2] flex flex-col gap-4 shadow-lg'>
                             <div className={`border-b-2 mb-2 ${centreStatus.isCentreOpen ? 'border-green-500' : 'border-red-500'} `}>
                                 <h3 className={`font-bold text-lg text-center ${centreStatus.isCentreOpen ? 'text-green-500' : 'text-red-500'}`}>{centreStatus.isCentreOpen ? 'Open' : 'Closed'}</h3>
                             </div>
-                            <div>
-                                <label htmlFor="isCentreOpen" className='text-sm font-bold text-[#3a1031]'>Centre Status: <span className='text-red-500 font-bold'>*</span> </label>
+                            <div className='flex flex-row gap-4'>
+                                <label htmlFor="isCentreOpen">{centreStatus.isCentreOpen ? <FaShop size={40} color='green' /> : <FaShopLock size={40} color='red' />}</label>
                                 <select
                                     name="isCentreOpen"
                                     id="isCentreOpen"
                                     value={centreStatus.isCentreOpen}
                                     onChange={handleChange}
-                                    className='block w-full rounded-md border-0 focus:outline-0 bg-white/75 p-0.5 text-[#3A1031] shadow-sm ring-1 ring-inset ring-[#3A1031] focus:ring-2 focus:ring-inset focus:ring-[#3a1031] sm:text-sm sm:leading-6'
+                                    className='w-full rounded-md border-0 focus:outline-0 bg-white/75 p-1 text-[#3A1031] shadow-sm ring-1 ring-inset ring-[#3A1031] focus:ring-2 focus:ring-inset focus:ring-[#3a1031] sm:text-sm sm:leading-6'
                                 >
                                     <option value='true'>Open</option>
                                     <option value='false'>Closed</option>
                                 </select>
                             </div>
-                            <div>
-                                <label htmlFor="isDoctorAvailable" className='text-sm font-bold text-[#3a1031]'>Doctor Status: <span className='text-red-500 font-bold'>*</span> </label>
+                            <div className='flex flex-row gap-4'>
+                                <label htmlFor="isCentreOpen">{centreStatus.isDoctorAvailable ? <FaUserDoctor size={40} color='green' /> : <FaUserDoctor size={40} color='red' />}</label>
                                 <select
                                     name="isDoctorAvailable"
                                     id="isDoctorAvailable"
                                     value={centreStatus.isDoctorAvailable}
                                     onChange={handleChange}
-                                    className='block w-full rounded-md border-0 focus:outline-0 bg-white/75 p-0.5 text-[#3A1031] shadow-sm ring-1 ring-inset ring-[#3A1031] focus:ring-2 focus:ring-inset focus:ring-[#3a1031] sm:text-sm sm:leading-6'
+                                    className='w-full rounded-md border-0 focus:outline-0 bg-white/75 p-0.5 text-[#3A1031] shadow-sm ring-1 ring-inset ring-[#3A1031] focus:ring-2 focus:ring-inset focus:ring-[#3a1031] sm:text-sm sm:leading-6'
                                 >
                                     <option value='true'>Available</option>
                                     <option value='false'>Not Available</option>
                                 </select>
                             </div>
-                            <div>
-                                <label htmlFor="currentAppointmentNo" className='text-sm font-bold text-[#3a1031]'>Current Appointment No: <span className='text-red-500 font-bold'>*</span> </label>
+                            <div className='flex flex-row gap-4'>
+                                <label htmlFor="isCentreOpen"><GrUserManager size={40}/></label>
                                 <input
                                     id="currentAppointmentNo"
                                     name="currentAppointmentNo"
                                     type="number"
-                                    className="block w-full rounded-md border-0 focus:outline-0 bg-white/75 py-0.5 px-2 text-[#3A1031] shadow-sm ring-1 ring-inset ring-[#3A1031] focus:ring-2 focus:ring-inset focus:ring-[#3a1031] sm:text-sm sm:leading-6"
+                                    className="w-full rounded-md border-0 focus:outline-0 bg-white/75 py-0.5 px-2 text-[#3A1031] shadow-sm ring-1 ring-inset ring-[#3A1031] focus:ring-2 focus:ring-inset focus:ring-[#3a1031] sm:text-sm sm:leading-6"
                                     value={centreStatus.currentAppointmentNo}
                                     onChange={handleChange}
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="totalAppointments" className='text-sm font-bold text-[#3a1031]'>Total Appointments: <span className='text-red-500 font-bold'>*</span> </label>
-                                <input
-                                    id="totalAppointments"
-                                    name="totalAppointments"
-                                    type="number"
-                                    disabled
-                                    className="block w-full rounded-md border-0 focus:outline-0 bg-white/75 py-0.5 px-2 text-[#3A1031] shadow-sm ring-1 ring-inset ring-[#3A1031] focus:ring-2 focus:ring-inset focus:ring-[#3a1031] sm:text-sm sm:leading-6"
-                                    value={todayCount}
                                 />
                             </div>
                             <button type="submit" className="flex w-full cursor-pointer justify-center rounded-md bg-[#3A1031] px-2 py-0.5 mt-1 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#3a1031c0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3A1031]">
@@ -131,7 +125,7 @@ function AdminDashboard() {
 
                     {/* All Appointments Table Section */}
                     <div className='flex flex-col items-start justify-start w-full lg:w-3/4 h-auto max-h-96 px-4 py-6 lg:px-10 lg:py-12 shadow-md bg-white rounded-lg overflow-y-auto'>
-                        <h2 className='text-2xl font-bold mb-4'>All Appointments</h2>
+                        <h2 className='text-2xl font-bold mb-4'>All Appointments ({todayCount})</h2>
                         <div className="overflow-x-auto w-full">
                             <table className="min-w-full bg-white">
                                 <thead>
@@ -197,7 +191,7 @@ function AdminDashboard() {
                 </div>
             </div>
             <Footer />
-        </>
+        </div>
     )
 }
 

@@ -145,7 +145,7 @@ const getUserDashbordData = async (req, res) => {
         res.status(200).json({
             centreStatus,
             totalAppointments,
-            userAppointmentNo: userAppointment?.appointNo || 0,
+            userAppointment,
             message: 'User dashbord data fetching success.'
         })
 

@@ -106,3 +106,15 @@ npm run dev
 cd .\Backend\
 npm run dev
 ```
+
+### Live Demo
+
+- **URL** - https://virtual-medical-appointment-system.vercel.app
+
+#### Admin
+admin@gmail.com
+aA12345678@
+
+#### User
+user@gmail.com
+uU12345678@

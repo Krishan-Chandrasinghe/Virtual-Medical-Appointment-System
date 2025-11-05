@@ -14,7 +14,7 @@ function RouteHandler({ type = 'public', component: Component, allowedRoles }) {
 
   // Protected routes
   if (type === 'protected') {
-    if (!user) return <Navigate to="/login" replace />;
+    if (!user) return <Navigate to="/" replace />;
     
     if (allowedRoles && !allowedRoles.includes(user.role)) {
       const redirectPath = user.role === 'admin' ? '/adminDashboard' : '/dashboard';

@@ -13,13 +13,7 @@ import { FaBan } from "react-icons/fa6";
 
 function Dashboard() {
     const [todayCount, setTodayCount] = useState(0);
-    const [userAppointment, setUserAppointment] = useState({
-        name: '',
-        regNumber: '',
-        appointNo: '',
-        appointDate: '',
-        createdAt: ''
-    });
+    const [userAppointment, setUserAppointment] = useState({});
     const [centreStatus, setCentreStatus] = useState({
         isCentreOpen: false,
         isDoctorAvailable: false,
@@ -58,42 +52,42 @@ function Dashboard() {
             <NavBar />
             {/* Hero Section */}
             <div className="flex flex-col items-center justify-center bg-gray-100 py-10 px-4">
-                    <h1 className="text-3xl sm:text-4xl text-center font-bold text-[#3a1031] my-2">Online Appointment System</h1>
-                    {!userAppointment &&
-                        <div className='flex flex-col items-center gap-4'>
-                            <h3 className="text-xl text-center font-bold text-[#3a1031]">Make an Appointment</h3>
-                            <Link to='/appointment' className="bg-[#3a1031] cursor-pointer text-center hover:bg-[#6b1d5c] text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">
-                                Book an Appointment
-                            </Link>
+                <h1 className="text-3xl sm:text-4xl text-center font-bold text-[#3a1031] my-2">Online Appointment System</h1>
+                {!userAppointment &&
+                    <div className='flex flex-col items-center gap-4'>
+                        <h3 className="text-xl text-center font-bold text-[#3a1031]">Make an Appointment</h3>
+                        <Link to='/appointment' className="bg-[#3a1031] cursor-pointer text-center hover:bg-[#6b1d5c] text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">
+                            Book an Appointment
+                        </Link>
+                    </div>
+                }
+                {userAppointment &&
+                    <div className='flex flex-col items-center justify-start w-full lg:w-3/4 h-auto max-h-96 px-4 py-6 shadow-md bg-white rounded-lg overflow-y-auto mt-4'>
+                        <h2 className='text-2xl font-bold mb-4'>Your Appointment </h2>
+                        <div className="overflow-x-auto w-full">
+                            <table className="min-w-full bg-white">
+                                <thead>
+                                    <tr>
+                                        <th className="py-2 px-4 border-b text-left">Appointment No</th>
+                                        <th className="py-2 px-4 border-b text-left">Name</th>
+                                        <th className="py-2 px-4 border-b text-left">Reg. Number</th>
+                                        <th className="py-2 px-4 border-b text-left min-w-[120px]">Appointment Date</th>
+                                        <th className="py-2 px-4 border-b text-left min-w-[150px]">Created At</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr className='bg-gray-100'>
+                                        <td className="py-2 px-4 border-b">{userAppointment?.appointNo}</td>
+                                        <td className="py-2 px-4 border-b whitespace-nowrap">{userAppointment?.name}</td>
+                                        <td className="py-2 px-4 border-b whitespace-nowrap">{userAppointment?.regNumber}</td>
+                                        <td className="py-2 px-4 border-b whitespace-nowrap">{new Date(userAppointment?.appointDate).toLocaleDateString()}</td>
+                                        <td className="py-2 px-4 border-b whitespace-nowrap">{new Date(userAppointment?.createdAt).toLocaleString()}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                    }
-                    {userAppointment &&
-                        <div className='flex flex-col items-center justify-start w-full lg:w-3/4 h-auto max-h-96 px-4 py-6 shadow-md bg-white rounded-lg overflow-y-auto mt-4'>
-                            <h2 className='text-2xl font-bold mb-4'>Your Appointment </h2>
-                            <div className="overflow-x-auto w-full">
-                                <table className="min-w-full bg-white">
-                                    <thead>
-                                        <tr>
-                                            <th className="py-2 px-4 border-b text-left">Appointment No</th>
-                                            <th className="py-2 px-4 border-b text-left">Name</th>
-                                            <th className="py-2 px-4 border-b text-left">Reg. Number</th>
-                                            <th className="py-2 px-4 border-b text-left min-w-[120px]">Appointment Date</th>
-                                            <th className="py-2 px-4 border-b text-left min-w-[150px]">Created At</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr className='bg-gray-100'>
-                                            <td className="py-2 px-4 border-b">{userAppointment.appointNo}</td>
-                                            <td className="py-2 px-4 border-b whitespace-nowrap">{userAppointment.name}</td>
-                                            <td className="py-2 px-4 border-b whitespace-nowrap">{userAppointment.regNumber}</td>
-                                            <td className="py-2 px-4 border-b whitespace-nowrap">{new Date(userAppointment.appointDate).toLocaleDateString()}</td>
-                                            <td className="py-2 px-4 border-b whitespace-nowrap">{new Date(userAppointment.createdAt).toLocaleString()}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    }
+                    </div>
+                }
             </div>
 
             {/* Status Section */}
@@ -111,7 +105,7 @@ function Dashboard() {
                     </div>
                     <div className='flex flex-රදඅ items-start justify-center px-5 py-5 shadow-md bg-white rounded-lg'>
                         <div className='p-2 flex flex-col items-center justify-center'>
-                            <h3 className='text-3xl font-bold'>{userAppointment ? userAppointment.appointNo : <FaBan size={35} color='red'/>}</h3>
+                            <h3 className='text-3xl font-bold'>{userAppointment ? userAppointment?.appointNo : <FaBan size={35} color='red' />}</h3>
                             <h3 className='text-md text-center sm:text-lg'>Your Appointment</h3>
                         </div>
                         <div className='p-2 flex flex-col items-center justify-center'>
